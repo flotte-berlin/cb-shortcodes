@@ -296,7 +296,7 @@ if ($month_cols > 1){
 }
 
 if ($colspan < $days) {
-	$print .= "<th colspan='".$month_cols."'>".$month2."</th>";
+	$print .= "<th class='sortless' colspan='".$month_cols."'>".$month2."</th>";
 }
 $print .= "</tr><tr><th><span class='green'>".$desc."</span></th><th>Standort<th class='cal sortless'>".$dayStr."</th></tr></thead><tbody>";
 	
