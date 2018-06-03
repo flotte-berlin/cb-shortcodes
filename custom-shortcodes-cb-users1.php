@@ -8,6 +8,7 @@
  * [cb_bookings_user]      user bookings summary (all subscriber bookings, sortable table)
  * 
  * sortable table requires Plugin 'Table Sorter'
+ */
 
 /****************** user statistics : ****************/
 
