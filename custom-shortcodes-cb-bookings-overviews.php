@@ -43,7 +43,7 @@ $item = '';
 $countLoc = 0;
 
 if ( $bookings ) {
-	$print = "<table class='user-bookings tablesorter'><thead><tr class='bg'><th>Standort</th><th>Lastenrad</th><th>Buchungen  class ='sortless'</th><th>Anzahl</th></tr></thead><tbody>";
+	$print = "<table class='user-bookings tablesorter'><thead><tr class='bg'><th>Standort</th><th>Lastenrad</th><th>Buchungen</th><th>Anzahl</th></tr></thead><tbody>";
 
 	foreach ( $bookings as $booking ) 
 	{
