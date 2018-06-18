@@ -85,54 +85,64 @@ add_shortcode( 'cb_bookings_preview', 'cb_bookings_preview_shortcode' );
 
 function cb_bookings_overview_shortcode( $atts ) {
 
-$date = new dateTime(current_time('mysql'));
-$heute = $date->format("j. n. Y");
-$today = $date->format("Y-m-d");
-$location = $atts['locid'];
-$max_days = $atts['days'];
-if (!$max_days > 0) {$max_days = 15;}
-$start_date = new dateTime();
-$start_date = $start_date->modify('-'.$max_days.' days');
-$date_begin = $start_date->format('Y-m-d');
-$end_date = new dateTime();
-$end_date = $end_date->modify('+'.$max_days.' days');
-$date_last = $end_date->format('Y-m-d');
+	if ( isset( $atts['locid'] ) && ! ( empty ($atts['locid'] ) ) ) { // make sure the location id is set
 
-$loc_name = get_the_title ($location);	
-$print = "<p><b>Buchungsübersicht für Standort: ". $loc_name. "</b><br>(Buchungsstand vom ". $heute . " für +/-".$max_days." Tage)</p>";
-$trenner = "</th><th>";
-$print .= "<table><tr><th>von".$trenner."bis".$trenner."gebucht von".$trenner."Mail".$trenner."Telefon</th></tr>";
-$trenner = "</td><td>";
-global $wpdb;
+		$date = new dateTime(current_time('mysql'));
+		$heute = $date->format("j. n. Y");
+		$today = $date->format("Y-m-d");
+		$location = $atts['locid'];
+		$max_days = isset ( $atts['days'] ) ?  $atts['days'] : 30;
+		if (!$max_days > 0) {$max_days = 15;}
+		$start_date = new dateTime();
+		$start_date = $start_date->modify('-'.$max_days.' days');
+		$date_begin = $start_date->format('Y-m-d');
+		$end_date = new dateTime();
+		$end_date = $end_date->modify('+'.$max_days.' days');
+		$date_last = $end_date->format('Y-m-d');
 
-$cbTable = $wpdb->prefix . "cb_bookings";
-$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' AND location_id = $location AND date_end >= '$date_begin' AND date_start <= '$date_last' ORDER by item_id ASC, date_start ASC", RID);
-$bookings = $wpdb->get_results($query);
-$item = '';
-$next_booking = 0; 
+		$loc_name = get_the_title ($location);	
+		$print = "<p><b>Buchungsübersicht für Standort: ". $loc_name. "</b><br>(Buchungsstand vom ". $heute . " für +/-".$max_days." Tage)</p>";
+		$trenner = "</th><th>";
+		$print .= "<table><tr><th>von".$trenner."bis".$trenner."gebucht von".$trenner."Mail".$trenner."Telefon</th></tr>";
+		$trenner = "</td><td>";
+		global $wpdb;
 
-foreach ( $bookings as $booking ) 
-{		
-	if ($booking->item_id != $item) {	
+		$cbTable = $wpdb->prefix . "cb_bookings";
+		$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' AND location_id = %s AND date_end >= '%s' AND date_start <= '%s' ORDER by item_id ASC, date_start ASC",
+			$location,
+			$date_begin,
+			$date_last
+	);
+		$bookings = $wpdb->get_results($query);
+		$item = '';
 		$next_booking = 0; 
-		$item = $booking->item_id;
-		$item_name = get_the_title ($item);	
-		$print .= "<tr><td colspan='5'><b>Lastenrad: <a class='green' href='/cb-items/" . $item_name . "'>". $item_name . "</a></b></td></tr>";
-	}
-	$user = get_user_by ( 'id', $booking->user_id ); 		
-	$date_start = DateTime::createFromFormat('Y-m-d', $booking->date_start);
-	$date_end = DateTime::createFromFormat('Y-m-d', $booking->date_end);
-	$style='';	
-	if ($booking->date_end < $today)   {$style = "class='bg'";	}
-	else if ($booking->date_start >= $today and $next_booking != 1 ){
-			$style = "class='next'";
-			$next_booking = 1; 
-	}
-	$print .= "<tr ".$style."><td>".$date_start->format('j. n.').$trenner.$date_end->format('j. n.').$trenner. $user->first_name . ' ' .$user->last_name.$trenner.$user->user_email.$trenner.$user->phone."</td></tr>";
-	
-}
-$print .= "</table>";
-return $print;
+
+		foreach ( $bookings as $booking ) 
+		{		
+			if ($booking->item_id != $item) {	
+				$next_booking = 0; 
+				$item = $booking->item_id;
+				$item_name = get_the_title ($item);	
+				$print .= "<tr><td colspan='5'><b>Lastenrad: <a class='green' href='/cb-items/" . $item_name . "'>". $item_name . "</a></b></td></tr>";
+			}
+			$user = get_user_by ( 'id', $booking->user_id ); 		
+			$date_start = DateTime::createFromFormat('Y-m-d', $booking->date_start);
+			$date_end = DateTime::createFromFormat('Y-m-d', $booking->date_end);
+			$style='';	
+			if ($booking->date_end < $today)   {$style = "class='bg'";	}
+			else if ($booking->date_start >= $today and $next_booking != 1 ){
+					$style = "class='next'";
+					$next_booking = 1; 
+			}
+			$print .= "<tr ".$style."><td>".$date_start->format('j. n.').$trenner.$date_end->format('j. n.').$trenner. $user->first_name . ' ' .$user->last_name.$trenner.$user->user_email.$trenner.$user->phone."</td></tr>";
+			
+		}
+		$print .= "</table>";
+		return $print;
+	} else { // if ( isset( $atts['locid'] ) && ! ( empty ($atts['locid'] ) ) )
+		echo ("You must provide a Location id!");
+	} // end if locid
+
 }
 add_shortcode( 'cb_bookings_overview', 'cb_bookings_overview_shortcode' );
 
