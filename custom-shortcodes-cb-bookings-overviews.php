@@ -1,5 +1,15 @@
 <?php
 /**
+/*
+Plugin Name: CB Shortcodes: Booking overviews
+Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
+Description: Shortcodes for displaying cb-bookings overviews on a page. Place in a non-public page! 
+Version: 1.0
+Author: gundelfisch
+Author URI: https://flotte-berlin.de
+License: GPLv2 or later
+ */
+/***
  * Shortcodes for displaying cb-bookings overviews on a page
  * Attention: the results contain personal user-data and should be displayed only on private pages for selected users!
  * Author: gundelfisch
