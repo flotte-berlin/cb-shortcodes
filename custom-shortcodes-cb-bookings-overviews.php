@@ -1,5 +1,4 @@
 <?php
-/**
 /*
 Plugin Name: CB Shortcodes: Booking overviews
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
@@ -15,7 +14,7 @@ License: GPLv2 or later
  * Author: gundelfisch
  * Version: 1.0.0.
  * 
- * * 
+ * *
  * [cb_bookings_preview]   coming bookings of all locations with booker's names (abbreviated)
  * [cb_bookings_overview]  bookings overview of 1 location with booker's contact data, parameter 'locid' and 'days' (max. days +/- today, default 15)
  * [cb_bookings_location]  bookings overview for location manager (CAF), parameter 'days' (max. days +/- today, default 15)
@@ -23,8 +22,7 @@ License: GPLv2 or later
  *
  * sortable table works with Plugin 'Table Sorter'
  * * CAF = Plugin 'Custom Advanced Fields' (select 1-n locations in user profile)
-*/
-*/
+ */
 
 /****************** coming bookings of all locations: ****************/
 
@@ -211,4 +209,3 @@ return $print;
 add_shortcode( 'cb_bookings_location', 'cb_bookings_location_shortcode' );
 
 ?>
-
