@@ -34,7 +34,9 @@ $print = '';
 global $wpdb;
 
 $cbTable = $wpdb->prefix . "cb_bookings";
-$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' AND date_end >= '$today' ORDER by location_id ASC, item_id ASC, date_start ASC", RID);
+$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' AND date_end >= '%s' ORDER by location_id ASC, item_id ASC, date_start ASC",
+	$today
+);
 $bookings = $wpdb->get_results($query);
 $location = '';
 $item = '';
