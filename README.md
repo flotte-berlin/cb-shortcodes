@@ -8,15 +8,6 @@ shortcodes can be used in pages, posts and widgets
 
 table sorting requires Plugin 'Table Sorter'
 
-custom-shortcodes-cb-bookings-overviews.php:
-
-[cb_bookings_preview]   coming bookings of all locations with booker's names (abbreviated)
-
-[cb_bookings_overview]  bookings overview of 1 location with booker's contact data, parameter 'locid' and 'days' (max. days +/- today, default 15)
-
-[cb_bookings_location]  bookings overview for location manager (CAF), parameter 'days' (max. days +/- today, default 15)
-CAF = Plugin 'Custom Advanced Fields' (field 'user_locations': select 1-n locations in user profile)
-
 custom-shortcodes-cb-items.php:
 
 [cb_items_teaser]       items teaser (linked thumbnails , sorted by ID asc
@@ -29,15 +20,24 @@ custom-shortcodes-cb-items.php:
 
 [cb_items_available]    availability of all items for the next 30 days (sortable calendar table), opt. parameter 'desc' for table description
 
-custom-shortcodes-cb-users1.php:
-
-[cb_bookings_user]      user bookings summary (all subscriber bookings, sortable table)
-
-COMING SOON: custom-shortcodes-statistics.php:
+custom-shortcodes-statistics1.php:
 
 [cb_bookings_summary]   past bookings summary for all locations (sortable table plus chart) 
 
 [cb_bookings_months]    past and future bookings summary for all items per month  (table and chart)
+
+custom-shortcodes-cb-bookings-overviews.php (only for non-public pages!):
+
+[cb_bookings_preview]   coming bookings of all locations with booker's names (abbreviated)
+
+[cb_bookings_overview]  bookings overview of 1 location with booker's contact data, parameter 'locid' and 'days' (max. days +/- today, default 15)
+
+[cb_bookings_location]  bookings overview for location manager (CAF), parameter 'days' (max. days +/- today, default 15)
+CAF = Plugin 'Custom Advanced Fields' (field 'user_locations': select 1-n locations in user profile)
+
+custom-shortcodes-cb-users1.php (only for non-public pages!):
+
+[cb_bookings_user]      user bookings summary (all subscriber bookings, sortable table)
 
 for more details see description on top of each php-file
 
