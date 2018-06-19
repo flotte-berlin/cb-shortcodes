@@ -9,7 +9,7 @@ table sorting requires Plugin 'Table Sorter'
 
 1. custom-shortcodes-cb-items.php:
 
-[cb_items_teaser]       items teaser (linked thumbnails , sorted by ID asc
+[cb_items_teaser]       items teaser (linked thumbnails , sorted by ID asc)
 
 [cb_items_teaser_cat]   items teaser (sorted and grouped by categories), optional parameter 'cat' (id)
 
