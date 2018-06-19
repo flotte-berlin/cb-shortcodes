@@ -9,8 +9,7 @@ Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
  */
-/**
- 
+/** 
  * [cb_bookings_summary]   past bookings summary for all locations (sortable table and chart) 
  * [cb_bookings_months]    past and future bookings summary for all items per month (table and chart) 
  * 
