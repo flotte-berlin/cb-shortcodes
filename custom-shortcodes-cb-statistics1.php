@@ -11,8 +11,8 @@ License: GPLv2 or later
  */
 /**
  
- * [cb_bookings_summary]   past bookings summary for all locations (sortable table) 
- * [cb_bookings_months]    past and future bookings summary for all items per month  * 
+ * [cb_bookings_summary]   past bookings summary for all locations (sortable table and chart) 
+ * [cb_bookings_months]    past and future bookings summary for all items per month (table and chart) 
  * 
  * sortable table requires Plugin 'Table Sorter'
  * chart by chart.js from cdnjs.cloudflare.com
