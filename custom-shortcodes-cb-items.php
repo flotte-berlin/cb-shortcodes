@@ -1,10 +1,15 @@
 <?php
-/**
- * Shortcodes for displaying cb-items incl. availability on a page
- * Remark: the results do not contain personal user-data and can be displayed also on public pages for everyone 
- * Author: gundelfisch
- * Version: 1.0.0.
- * 
+/*
+Plugin Name: CB Shortcodes: items teaser and availability 
+Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
+Description: Shortcodes for displaying items teaser and availability on a page
+Remark: the results do not contain personal user-data and can be displayed also on public pages for everyone 
+Version: 1.0
+Author: gundelfisch
+Author URI: https://flotte-berlin.de
+License: GPLv2 or later
+ */
+/***
  * [cb_items_teaser]       items teaser (linked thumbnails , sorted by ID asc
  * [cb_items_teaser_cat]   items teaser (sorted and grouped by categories), optional parameter 'cat' (id)
  * 
