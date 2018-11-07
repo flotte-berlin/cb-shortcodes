@@ -31,8 +31,8 @@ table sorting requires Plugin 'Table Sorter'
 
 [cb_bookings_overview]  bookings overview of 1 location with booker's contact data, parameter 'locid' and 'days' (max. days +/- today, default 15)
 
-[cb_bookings_location]  bookings overview for location manager (CAF), parameter 'days' (max. days +/- today, default 15)
-CAF = Plugin 'Custom Advanced Fields' (field 'user_locations': select 1-n locations in user profile)
+[cb_bookings_location]  bookings overview for location manager (ACF), parameter 'days' (max. days +/- today, default 15)
+ACF = Plugin 'Advanced Custom Fields' (field 'user_locations': select 1-n locations in user profile)
 
 4. custom-shortcodes-cb-users1.php (only for non-public pages!):
 
