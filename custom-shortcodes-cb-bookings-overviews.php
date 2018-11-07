@@ -17,11 +17,11 @@ License: GPLv2 or later
  * *
  * [cb_bookings_preview]   coming bookings of all locations with booker's names (abbreviated)
  * [cb_bookings_overview]  bookings overview of 1 location with booker's contact data, parameter 'locid' and 'days' (max. days +/- today, default 15)
- * [cb_bookings_location]  bookings overview for location manager (CAF), parameter 'days' (max. days +/- today, default 15)
+ * [cb_bookings_location]  bookings overview for location manager (ACF), parameter 'days' (max. days +/- today, default 15)
  *
  *
  * sortable table works with Plugin 'Table Sorter'
- * * CAF = Plugin 'Custom Advanced Fields' (select 1-n locations in user profile)
+ * * ACF = Plugin 'Advanced Custom Fields' (select 1-n locations in user profile)
  */
 
 /****************** coming bookings of all locations: ****************/
