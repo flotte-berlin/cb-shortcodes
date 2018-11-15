@@ -42,7 +42,7 @@ $columns = array('location','item','since','bookings','days_pre','days_month','d
 	
 global $wpdb;
 $cbTable = $wpdb->prefix . "cb_bookings";
-$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' AND date_start <= '$date_end' ORDER by location_id ASC, item_id ASC", RID);
+$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' AND date_start <= '%s' ORDER by location_id ASC, item_id ASC", $date_end);
 $bookings = $wpdb->get_results($query);
 	
 if ($bookings) {
