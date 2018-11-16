@@ -219,5 +219,4 @@ return $print;
 }
 
 add_shortcode( 'cb_bookings_location', 'cb_bookings_location_shortcode' );
-
 ?>
