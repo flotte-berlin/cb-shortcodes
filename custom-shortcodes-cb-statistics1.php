@@ -536,6 +536,4 @@ return $print;
 }
 
 add_shortcode( 'cb_bookings_category', 'cb_bookings_category_shortcode' );
-
 ?>
-
