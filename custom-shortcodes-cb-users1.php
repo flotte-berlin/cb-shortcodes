@@ -118,4 +118,5 @@ if ($bookings) {
 return $print;
 }
 add_shortcode( 'cb_bookings_user', 'cb_bookings_user_shortcode' );
+
 ?>
