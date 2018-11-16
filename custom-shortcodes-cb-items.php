@@ -366,5 +366,4 @@ return $print;
 
 }
 add_shortcode( 'cb_items_available', 'cb_items_available_shortcode' );
-
 ?>
