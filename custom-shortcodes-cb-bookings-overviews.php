@@ -94,7 +94,7 @@ function cb_bookings_overview_shortcode( $atts ) {
 		$heute = $date->format("j. n. Y");
 		$today = $date->format("Y-m-d");
 		$location = $atts['locid'];
-		$max_days = isset ( $atts['days'] ) ?  $atts['days'] : 30;
+		$max_days = isset ( $atts['days'] ) ?  $atts['days'] : 15;
 		if (!$max_days > 0) {$max_days = 15;}
 		$start_date = new dateTime();
 		$start_date = $start_date->modify('-'.$max_days.' days');
@@ -153,10 +153,9 @@ add_shortcode( 'cb_bookings_overview', 'cb_bookings_overview_shortcode' );
 
 function cb_bookings_location_shortcode( $atts ) {	
 $fieldname = isset ( $atts['acf'] ) ?  $atts['acf'] : 'user_locations';	
+$max_days = isset ( $atts['days'] ) ?  $atts['days'] : 15;	
 
 $current_user = wp_get_current_user();
-$max_days = $atts['days'];
-if (!$max_days > 0) {$max_days = 15;}
 	
 if ( 0 != $current_user->ID ) {
 	$user_info = get_userdata($current_user->ID);
