@@ -4,7 +4,7 @@ Plugin Name: CB Shortcodes: Booking statistics
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying bookings statistics on a page. 
 Remark: the results do not contain personal user-data 
-Version: 1.0
+Version: 1.1
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
@@ -278,7 +278,7 @@ if ($booking1)
 		$date_month_last->setTime(23, 59, 59);	
 		$month_days = date("t", strtotime($month_first));		
 	
-		$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' AND date_start >= '$month_first' AND date_start <= '$month_last' ORDER BY item_id ASC", RID);
+		$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' AND date_start >= '%s' AND date_start <= '%s' ORDER BY item_id ASC", $month_first, $month_last);
 		$bookings = $wpdb->get_results($query);	
 		
 		foreach ( $bookings as $booking ) 	
