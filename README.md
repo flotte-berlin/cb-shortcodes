@@ -13,9 +13,14 @@ table sorting requires Plugin 'Table Sorter'
 
 [cb_items_teaser_cat]   items teaser (sorted and grouped by categories), optional parameter 'cat' (id)
 
-[cb_items_date]         bookable items for 1 date (list), opt. parameter: 'addDays' (checked day after today) 
+[cb_items_date]         bookable items for 1 date (list), opt. parameter:
+                        'addDays' (checked day after today)                       
+                        'sort' (sort order for items, default DESC)
 
-[cb_items_next_date]    next date with bookable items (list), opt. parameter: 'days' (max. checked days from today, default 30) and 'time' (0-24, time to switch checking from today to tomorrow, default 14)
+[cb_items_next_date]    next date with bookable items (list), opt. parameter: 
+                        'days' (max. checked days from today, default 30) 
+                        'time' (0-24, time to switch checking from today to tomorrow, default 14)
+                        'sort' (sort order for items, default DESC)
 
 [cb_items_available]    availability of all items for the next 30 days (sortable calendar table), opt. parameter 'desc' for table description
 
@@ -29,9 +34,14 @@ table sorting requires Plugin 'Table Sorter'
 
 [cb_bookings_preview]   coming bookings of all locations with booker's names (abbreviated)
 
-[cb_bookings_overview]  bookings overview of 1 location with booker's contact data, parameter 'locid' and 'days' (max. days +/- today, default 15)
+[cb_bookings_overview]  bookings overview of 1 location with booker's contact data, parameter 
+ 		                	  'locid' (id of location) 
+			                  'days'  (max. days +/- today, default 15)
+ 
+[cb_bookings_location]  bookings overview for location manager, parameter
+                        'days'  (max. days +/- today, default 15)
+           		          'acf'   (ACF fieldname, default 'user_locations') 
 
-[cb_bookings_location]  bookings overview for location manager (ACF), parameter 'days' (max. days +/- today, default 15)
 ACF = Plugin 'Advanced Custom Fields' (field 'user_locations': select 1-n locations in user profile)
 
 4. custom-shortcodes-cb-users1.php (only for non-public pages!):
