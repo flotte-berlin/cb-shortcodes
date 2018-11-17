@@ -411,6 +411,7 @@ if ($booking1)
 	
 	// prepare and print table rows
 	foreach($rows as $row) {
+	   if ($row['bookings'] > 0) {
 		
 		$row['days_pre'] = round($row['days_pre'] / $row['bookings']); 
 		$row['rate_month'] = round(100 * $row['booked_days'] / $row['days_month'])."%";
@@ -433,6 +434,7 @@ if ($booking1)
 			$print .= "<tr><th>".implode($trenner2, $row)."</th></tr>";
 			$print .= "</tfoot>";	
 		}
+	   }
 			
 	} // end of rows
 	$print .= "</table>";
