@@ -3,7 +3,7 @@
 Plugin Name: CB Shortcodes: Booking overviews
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying cb-bookings overviews on a page. Place in a non-public page! 
-Version: 1.0
+Version: 1.1
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
@@ -16,12 +16,15 @@ License: GPLv2 or later
  * 
  * *
  * [cb_bookings_preview]   coming bookings of all locations with booker's names (abbreviated)
- * [cb_bookings_overview]  bookings overview of 1 location with booker's contact data, parameter 'locid' and 'days' (max. days +/- today, default 15)
- * [cb_bookings_location]  bookings overview for location manager (ACF), parameter 'days' (max. days +/- today, default 15)
- *
+ * [cb_bookings_overview]  bookings overview of 1 location with booker's contact data, parameter 
+ *			  'locid' (id of location) 
+ * 			  'days'  (max. days +/- today, default 15)
+ * [cb_bookings_location]  bookings overview for location manager, parameter
+ *                        'days'  (max. days +/- today, default 15)
+ *			  'acf'   (ACF fieldname, default 'user_locations') 
  *
  * sortable table works with Plugin 'Table Sorter'
- * * ACF = Plugin 'Advanced Custom Fields' (select 1-n locations in user profile)
+ * ACF = Plugin 'Advanced Custom Fields' (select 1-n locations in user profile)
  */
 
 /****************** coming bookings of all locations: ****************/
@@ -149,6 +152,7 @@ add_shortcode( 'cb_bookings_overview', 'cb_bookings_overview_shortcode' );
 /****************** bookings overview for location manager: ****************/
 
 function cb_bookings_location_shortcode( $atts ) {	
+$fieldname = isset ( $atts['acf'] ) ?  $atts['acf'] : 'user_locations';	
 
 $current_user = wp_get_current_user();
 $max_days = $atts['days'];
@@ -173,7 +177,7 @@ if ( 0 != $current_user->ID ) {
 		$print .= "<p>als Teammitglied siehst du hier zuerst noch alle Standort-Ansprechpartner:</p>";
 		$args = array(	
 				'role__not_in' => array('subscriber'),
-				'meta_key'     => 'user_locations',
+				'meta_key'     => $fieldname,
 				'meta_value'   => '',
 				'meta_compare' => '!='	
  		 ); 
@@ -184,7 +188,7 @@ if ( 0 != $current_user->ID ) {
 		$trenner = "</td><td>";
 		foreach ( $users as $user ) { 
 					
-				$user_locations = get_field('user_locations', 'user_'.$user->ID);
+				$user_locations = get_field($fieldname, 'user_'.$user->ID);
 			    
 			 	if ( $user_locations) {
 					 
