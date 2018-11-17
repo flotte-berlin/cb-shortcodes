@@ -4,7 +4,7 @@ Plugin Name: CB Shortcodes: items teaser and availability
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying items teaser and availability on a page
 Remark: the results do not contain personal user-data and can be displayed also on public pages for everyone 
-Version: 1.0
+Version: 1.2
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
@@ -13,9 +13,15 @@ License: GPLv2 or later
  * [cb_items_teaser]       items teaser (linked thumbnails , sorted by ID asc
  * [cb_items_teaser_cat]   items teaser (sorted and grouped by categories), optional parameter 'cat' (id)
  * 
- * [cb_items_date]         bookable items for 1 date (list), opt. parameter: 'addDays' (checked day after today) 
- * [cb_items_next_date]    next date with bookable items (list), opt. parameter: 'days' (max. checked days from today, default 30) and 'time' (0-24, time to switch checking from today to tomorrow, default 14) 
- * [cb_items_available]    availability of all items for the next 30 days (sortable calendar table), opt. parameter 'desc' for table description
+ * [cb_items_date]         bookable items for 1 date (list), opt. parameter: 
+ *				'addDays' (checked day after today), 
+ *				'sort' (sort order for items, default DESC)
+ * [cb_items_next_date]    next date with bookable items (list), opt. parameter: 
+ *				'days' (max. checked days from today, default 30),
+ *				 'time' (0-24, time to switch checking from today to tomorrow, default 14) 
+ *				 'sort'  (sort order for items, default DESC) 
+ * [cb_items_available]    availability of all items for the next 30 days (sortable calendar table), opt. parameter 
+ *				'desc' for table description
  *
  * sortable table works with Plugin 'Table Sorter'
  *  
@@ -27,14 +33,14 @@ $print = '';
 $items = get_posts( array(
     'post_type'      => 'cb_items',
 	'post_status'    => 'publish',
-	'order' 		 => 'ASC',
-    'posts_per_page' => -1
+	'order' 	 => 'ASC',
+   	'posts_per_page' => -1
 	) );
  
 if ( $items) {
    	foreach ( $items as $item ) {
 		$item_name =  $item->post_title;			
-		$print .= '<figure class="cb-items-teaser wp-caption alignleft"><a href="/cb-items/'.strtolower($item_name).'">';
+		$print .= '<figure class="cb-items-teaser wp-caption alignleft"><a href="'.get_permalink($item->ID).'">';
 		$print .= get_the_post_thumbnail($item->ID,'thumbnail');
 		$print .= '</a><figcaption class="wp-caption-text"><span class="green">'.$item_name.'</span></figcaption></figure>';
 	}
@@ -48,8 +54,7 @@ add_shortcode( 'cb_items_teaser', 'cb_items_teaser_shortcode' );
 function cb_items_teaser_cat_shortcode( $atts ) {
 	
 $print = '';	
-$cat = 0;
-$cat = $atts['cat'];
+$cat = isset ( $atts['cat'] ) ?  $atts['cat'] : 0;
 
 $categories = get_categories( array(
 		'taxonomy' => 'cb_items_category',
@@ -81,7 +86,7 @@ foreach ( $categories as $category ) {
 	if ( $items) {
    	foreach ( $items as $item ) {
 		$item_name =  $item->post_title;			
-		$print .= '<figure class="cb-items-teaser wp-caption alignleft"><a href="/cb-items/'.strtolower($item_name).'">';
+		$print .= '<figure class="cb-items-teaser wp-caption alignleft"><a href="'.get_permalink($item->ID).'">';
 		$print .= get_the_post_thumbnail($item->ID,'thumbnail');
 		$print .= '</a><figcaption class="wp-caption-text"><span class="green">'.$item_name.'</span></figcaption></figure>';
 		}
@@ -98,40 +103,40 @@ add_shortcode( 'cb_items_teaser_cat', 'cb_items_teaser_cat_shortcode' );
 function get_holidays ( $year, $format ) {	
 
 //$holidays = array ('1.1.','1.5.','3.10.','25.12.','26.12.');
-$holidays = array ();
-$newYear = new DateTime('2018-01-01');	
-array_push($holidays, $newYear->format($format));
-$laborDay = new DateTime('2018-05-01');	
-array_push($holidays, $laborDay->format($format));
-$unityDay = new DateTime('2018-10-03');	
-array_push($holidays, $unityDay->format($format));
-$xmas1 = new DateTime('2018-12-25');	
-array_push($holidays, $xmas1->format($format));
-$xmas2 = new DateTime('2018-12-26');	
-array_push($holidays, $xmas2->format($format));
-
-$easterDate = new DateTime(date('Y-m-d',easter_date($year)));
-$easterSunday = $easterDate->modify('+1 day');
-array_push($holidays, $easterSunday->format($format));
-$goodFriday = $easterDate->modify('-1 day');
-array_push($holidays, $goodFriday->format($format));
-$easterMonday = $easterDate->modify('+2 days');
-array_push($holidays, $easterMonday->format($format));
-$ascensionDay = $easterDate->modify('+38 days');
-array_push($holidays, $ascensionDay->format($format));
-$pentecostSunday = $ascensionDay->modify('+10 days');
-array_push($holidays, $pentecostSunday->format($format));
-$pentecostMonday = $pentecostSunday->modify('+1 day');
-array_push($holidays, $pentecostMonday->format($format));
-//echo implode (',',$holidays);
-return $holidays;
+	$holidays = array ();
+	$newYear = new DateTime($year.'-01-01');
+    	array_push($holidays, $newYear->format($format));
+    	$laborDay = new DateTime($year.'-05-01');
+    	array_push($holidays, $laborDay->format($format));
+    	$unityDay = new DateTime($year.'-10-03');
+   	array_push($holidays, $unityDay->format($format));
+    	$xmas1 = new DateTime($year.'-12-25');
+    	array_push($holidays, $xmas1->format($format));
+    	$xmas2 = new DateTime($year.'-12-26');
+    	array_push($holidays, $xmas2->format($format));
+	$easterDate = new DateTime(date('Y-m-d',easter_date($year)));
+	$easterSunday = $easterDate->modify('+1 day');
+	array_push($holidays, $easterSunday->format($format));
+	$goodFriday = $easterDate->modify('-1 day');
+	array_push($holidays, $goodFriday->format($format));
+	$easterMonday = $easterDate->modify('+2 days');
+	array_push($holidays, $easterMonday->format($format));
+	$ascensionDay = $easterDate->modify('+38 days');
+	array_push($holidays, $ascensionDay->format($format));
+	$pentecostSunday = $ascensionDay->modify('+10 days');
+	array_push($holidays, $pentecostSunday->format($format));
+	$pentecostMonday = $pentecostSunday->modify('+1 day');
+	array_push($holidays, $pentecostMonday->format($format));
+	//echo implode (',',$holidays);
+	return $holidays;
 }
 
 /****************** bookable items for 1 date (list) ****************/
 
 function cb_items_date_shortcode( $atts ) {	
-$add = $atts['addDays'];
-//if (!$add > 0 ){$add = 1;}
+$add  = isset ( $atts['addDays'] ) ?  $atts['addDays'] : 1;
+$sort = isset ( $atts['sort'] ) ?  $atts['sort'] : 'DESC';
+
 $today = new dateTime(current_time('mysql'));
 $nextday = $today->modify('+'.$add.' days');
 $date = $nextday->format("Y-m-d");	
@@ -154,8 +159,8 @@ $cbCity = "commons-booking_location_adress_city";
 $items = get_posts( array(
     'post_type'      => 'cb_items',
 	'post_status'    => 'publish',
-	'order' 		 => 'DESC',
-    'posts_per_page' => -1
+	'order' 	 => $sort,
+   	 'posts_per_page' => -1
 	) );
 	
 if ( $items) {
@@ -164,7 +169,7 @@ if ( $items) {
 		$itemID = $item->ID;
 		$item_name = $item->post_title;	
 		
-		$query = $wpdb->prepare("SELECT location_id FROM $cbTimeframes WHERE item_id = $itemID AND date_start <= '$date' AND date_end >= '$date'", RID);
+		$query = $wpdb->prepare("SELECT location_id FROM $cbTimeframes WHERE item_id = %s AND date_start <= '%s' AND date_end >= '%s'", $itemID, $date, $date);
 		$timeframes = $wpdb->get_results($query);
 		
 		if ( $timeframes) {
@@ -175,9 +180,9 @@ if ( $items) {
 
 			 if ( $closeddays == '' or
 				( !in_array($weekday,$closeddays) and 
-				  !in_array($date,$holidays) )) {			 
+				  !in_array($dateDM,$holidays) )) {			 
 		
-		   	 	 $query2 = $wpdb->prepare("SELECT user_id FROM $cbBookings WHERE status = 'confirmed' AND item_id = $itemID AND date_start <= '$date' AND date_end >= '$date'", RID);
+		   	 	 $query2 = $wpdb->prepare("SELECT user_id FROM $cbBookings WHERE status = 'confirmed' AND item_id = %s AND date_start <= '%s' AND date_end >= '%s'", $itemID, $date, $date );
 		    	 $bookings = $wpdb->get_results($query2);
 		       			     			
 				 if (!$bookings) {
@@ -186,7 +191,7 @@ if ( $items) {
 					$location = get_post_meta($timeframe->location_id, $cbCity, TRUE);
 					$location = str_replace('Berlin-','',$location);
 					if ($bookable_items == 0) {$print .= '<ul>';}
-					$print .= '<li><a href="/cb-items/'.strtolower($item_name).'">'.$item_name.'</a>';	
+					$print .= '<li><a href="'.get_permalink($item->ID).'">'.$item_name.'</a>';	
 					$print .= '<span> ('.$location.')</span></li>';
 					$bookable_items++;
 					
@@ -206,22 +211,24 @@ add_shortcode( 'cb_items_date', 'cb_items_date_shortcode' );
 /****************** next date with bookable items (list) ****************/
 
 function cb_items_next_date_shortcode( $atts ) {
-	$maxTimeToday = $atts['time'];	
-	if (!$maxTimeToday > 0 ){$maxTimeToday = 14;} // Uhrzeit, ab der morgen statt heute abgefragt wird
-	$maxDays = $atts['days'];	
-	if (!$maxDays > 0 ){$maxDays = 30;} //wieviele zukünftige Tage abfragen
+	$maxTimeToday  = isset ( $atts['time'] ) ?  $atts['time'] : 14;
+	 // Uhrzeit, ab der nicht mehr für heute abgefragt wird
+	$maxDays  = isset ( $atts['days'] ) ?  $atts['days'] : 30;
+	//wieviele zukünftige Tage abfragen
+	$sort = isset ( $atts['sort'] ) ?  $atts['sort'] : 'DESC';
+	// Reihenfolge Artikel
 
 	$addDays = 0;
 	setlocale (LC_ALL, 'de_DE.utf8');
 	
 	$today = new dateTime(current_time('mysql'));
-    $timeToday = $today->format("G");
+   	 $timeToday = $today->format("G");
 	if ($timeToday >= $maxTimeToday) {
 		$addDays = 1;
 	}
 		
 	for ($i = $addDays; $i < $maxDays; $i++) {
-		$atts = array ('addDays' => $i);		
+		$atts = array ('addDays' => $i, 'sort' => $sort);		
 		$result = cb_items_date_shortcode( $atts );
 		if (preg_match('%href%', $result)) {
 			break;
@@ -252,7 +259,7 @@ add_shortcode( 'cb_items_next_date', 'cb_items_next_date_shortcode' );
 function cb_items_available_shortcode( $atts ) {
 
 $print = '';
-$desc = $atts['desc']; // auch ggfs. category ?
+$desc = isset ( $atts['desc'] ) ?  $atts['desc'] : ''; 
 $date = new dateTime(current_time('mysql'));
 $today = $date->format("Y-m-d");
 $year = $date->format("Y");
@@ -327,7 +334,7 @@ foreach ( $items as $item ) {
 		$item_name = $item->post_title;	
 		$days_display = array_fill(0,$days,'<span class="closed">*</span>');
 		
-		$query = $wpdb->prepare("SELECT * FROM $cbTimeframes WHERE item_id = $itemID AND date_end >= '$today'", RID);
+		$query = $wpdb->prepare("SELECT * FROM $cbTimeframes WHERE item_id = %s AND date_end >= '%s'", $itemID, $today);
 		$timeframes = $wpdb->get_results($query);
 		if ($timeframes) {
 		
@@ -357,7 +364,7 @@ foreach ( $items as $item ) {
 			}
 		}
 		$dayStr = implode($trenner, $days_display);
-		$print .= "<tr><td><b><a href='/cb-items/".$item_name."'>".$item_name."</a></b>".$trenner.$location.$trenner.$dayStr."</td></tr>";
+		$print .= "<tr><td><b><a href='".get_permalink($item->ID)."'>".$item_name."</a></b>".$trenner.$location.$trenner.$dayStr."</td></tr>";
 	}	
 }	
 	
