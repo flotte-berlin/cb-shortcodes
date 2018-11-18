@@ -353,7 +353,7 @@ foreach ( $items as $item ) {
 			$location = str_replace('Berlin-','B-',$location);
 		}
 	
-		$query = $wpdb->prepare("SELECT * FROM $cbBookings WHERE status = 'confirmed' AND date_end >= '$today' AND item_id = $itemID ORDER BY date_start ASC", RID);
+		$query = $wpdb->prepare("SELECT * FROM $cbBookings WHERE status = 'confirmed' AND date_end >= '%s' AND item_id = %s ORDER BY date_start ASC", $today, $itemID);
 	    $bookings = $wpdb->get_results($query);
 	
 		foreach ( $bookings as $booking ) {				
