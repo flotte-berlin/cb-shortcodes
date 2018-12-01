@@ -3,7 +3,7 @@
 Plugin Name: CB Shortcodes: Booking overviews
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying cb-bookings overviews on a page. Place in a non-public page! 
-Version: 1.2
+Version: 1.2.1
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
@@ -126,7 +126,7 @@ function cb_bookings_overview_shortcode( $atts ) {
 				$next_booking = 0; 
 				$item = $booking->item_id;
 				$item_name = get_the_title ($item);	
-				$print .= "<tr><td colspan='5'><b>Lastenrad: <a class='green' href='/cb-items/" . $item_name . "'>". $item_name . "</a></b></td></tr>";
+				$print .= "<tr><td colspan='5'><b>Lastenrad: <a class='green' href='".get_permalink($item)."'>". $item_name . "</a></b></td></tr>";
 			}
 			$user = get_user_by ( 'id', $booking->user_id ); 		
 			$date_start = DateTime::createFromFormat('Y-m-d', $booking->date_start);
