@@ -4,7 +4,7 @@ Plugin Name: CB Shortcodes: items teaser and availability
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying items teaser and availability on a page
 Remark: the results do not contain personal user-data and can be displayed also on public pages for everyone 
-Version: 1.2
+Version: 1.2.1
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
@@ -114,13 +114,12 @@ function get_holidays ( $year, $format ) {
     	array_push($holidays, $xmas1->format($format));
     	$xmas2 = new DateTime($year.'-12-26');
     	array_push($holidays, $xmas2->format($format));
-	$easterDate = new DateTime(date('Y-m-d',easter_date($year)));
-	$easterSunday = $easterDate->modify('+1 day');
-	array_push($holidays, $easterSunday->format($format));
+	$easterDate = new DateTime(date('Y-m-d',easter_date($year))); //Saturday
 	$goodFriday = $easterDate->modify('-1 day');
 	array_push($holidays, $goodFriday->format($format));
-	$easterMonday = $easterDate->modify('+2 days');
-	array_push($holidays, $easterMonday->format($format));
+	$easterSunday = $easterDate->modify('+2 days');
+	array_push($holidays, $easterSunday->format($format));
+	$easterMonday = $easterDate->modify('+1 day');
 	$ascensionDay = $easterDate->modify('+38 days');
 	array_push($holidays, $ascensionDay->format($format));
 	$pentecostSunday = $ascensionDay->modify('+10 days');
@@ -248,7 +247,7 @@ function cb_items_next_date_shortcode( $atts ) {
 		$print = '<div class="next-available"><b>'.$nextday.': '.$result.'</b></div>';	
 	} 
 	else {
-		$print = '<p class="next-available">in den nächsten '.$days.' Tagen ist nichts buchbar!</p>';
+		$print = '<p class="next-available">in den nächsten '.$maxDays.' Tagen ist nichts buchbar!</p>';
 	}
 	return $print;
 }
@@ -349,7 +348,7 @@ foreach ( $items as $item ) {
 					  $days_display[$i] = "<span class='free'>0</span>";
 				 }
 			}
-			$location = get_post_meta($timeframe->location_id, $cbCity, TRUE);
+			$location = get_the_title ($timeframe->location_id); // get_post_meta($timeframe->location_id, $cbCity, TRUE);
 			$location = str_replace('Berlin-','B-',$location);
 		}
 	
