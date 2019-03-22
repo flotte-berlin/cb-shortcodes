@@ -186,8 +186,8 @@ if ( $items) {
 		       			     			
 				 if (!$bookings) {
 				 
-					$item_name = $item->post_title;		
-					$location = get_post_meta($timeframe->location_id, $cbCity, TRUE);
+					$item_name = $item->post_title;	
+					$location = get_the_title ($timeframe->location_id); // get_post_meta($timeframe->location_id, $cbCity, TRUE);
 					$location = str_replace('Berlin-','',$location);
 					if ($bookable_items == 0) {$print .= '<ul>';}
 					$print .= '<li><a href="'.get_permalink($item->ID).'">'.$item_name.'</a>';	
