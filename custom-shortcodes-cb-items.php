@@ -4,7 +4,7 @@ Plugin Name: CB Shortcodes: items teaser and availability
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying items teaser and availability on a page
 Remark: the results do not contain personal user-data and can be displayed also on public pages for everyone 
-Version: 1.2.1
+Version: 1.2.2
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
