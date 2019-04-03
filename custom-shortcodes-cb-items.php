@@ -4,7 +4,7 @@ Plugin Name: CB Shortcodes: items teaser and availability
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying items teaser and availability on a page
 Remark: the results do not contain personal user-data and can be displayed also on public pages for everyone 
-Version: 1.2.2
+Version: 1.2.3
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
@@ -120,6 +120,7 @@ function get_holidays ( $year, $format ) {
 	$easterSunday = $easterDate->modify('+2 days');
 	array_push($holidays, $easterSunday->format($format));
 	$easterMonday = $easterDate->modify('+1 day');
+	array_push($holidays, $easterMonday->format($format));
 	$ascensionDay = $easterDate->modify('+38 days');
 	array_push($holidays, $ascensionDay->format($format));
 	$pentecostSunday = $ascensionDay->modify('+10 days');
