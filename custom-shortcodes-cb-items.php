@@ -339,8 +339,9 @@ foreach ( $items as $item ) {
 		$timeframes = $wpdb->get_results($query);
 		if ($timeframes) {
 		
-		    foreach ( $timeframes as $timeframe ) {		
-			$closeddays = get_post_meta($timeframe->location_id, $cbClosedDays, TRUE);
+		    	$location1 = '';
+		    	foreach ( $timeframes as $timeframe ) {		
+		    	$closeddays = get_post_meta($timeframe->location_id, $cbClosedDays, TRUE);
 			for ($i = 0; $i < $days; $i++) {
 				 if ($days_dates[$i] >= $timeframe->date_start and $days_dates[$i] <= $timeframe->date_end
 				 and ($closeddays == '' 
