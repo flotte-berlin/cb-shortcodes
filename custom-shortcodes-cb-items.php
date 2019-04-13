@@ -290,6 +290,7 @@ for ($i = 0; $i < $days; $i++) {
 	}	
 } 
 	
+$last_day = $days_dates[$days-1];
 $trenner = "</th><th class='cal sortless'>";
 $dayStr = implode($trenner, $days_display);
 $colStr = implode(' ', $days_cols);
@@ -334,7 +335,7 @@ foreach ( $items as $item ) {
 		$item_name = $item->post_title;	
 		$days_display = array_fill(0,$days,'<span class="closed">*</span>');
 		
-		$query = $wpdb->prepare("SELECT * FROM $cbTimeframes WHERE item_id = %s AND date_end >= '%s'", $itemID, $today);
+		$query = $wpdb->prepare("SELECT * FROM $cbTimeframes WHERE item_id = %s AND date_start <= '%s' AND date_end >= '%s'", $itemID, $last_day, $today);
 		$timeframes = $wpdb->get_results($query);
 		if ($timeframes) {
 		
