@@ -4,7 +4,7 @@ Plugin Name: CB Shortcodes: items teaser and availability
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying items teaser and availability on a page
 Remark: the results do not contain personal user-data and can be displayed also on public pages for everyone 
-Version: 1.2.3
+Version: 1.2.4
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
@@ -295,7 +295,7 @@ $dayStr = implode($trenner, $days_display);
 $colStr = implode(' ', $days_cols);
 $print = "<table class='bookings tablesorter'><colgroup><col><col>".$colStr."</colgroup><thead>";
 setlocale (LC_ALL,'de_DE.utf8');
-$print .= "<tr><th colspan='2' class='sortless'></th><th class='sortless' colspan='".$colspan."'>";
+$print .= "<tr><th colspan='2' class='sortless'>".$desc."</th><th class='sortless' colspan='".$colspan."'>";
 if ($colspan > 1) {
 	$print .= strftime('%B')."</th>";
 } else {
@@ -310,7 +310,7 @@ if ($month_cols > 1){
 if ($colspan < $days) {
 	$print .= "<th class='sortless' colspan='".$month_cols."'>".$month2."</th>";
 }
-$print .= "</tr><tr><th><span class='green'>".$desc."</span></th><th>Standort<th class='cal sortless'>".$dayStr."</th></tr></thead><tbody>";
+$print .= "</tr><tr><th>Artikel</th><th>Standort<th class='cal sortless'>".$dayStr."</th></tr></thead><tbody>";
 	
 $trenner = "</td><td>";
 $days_display = array_fill(0,$days,'<span class="free">0</span>');
@@ -351,6 +351,10 @@ foreach ( $items as $item ) {
 			}
 			$location = get_the_title ($timeframe->location_id); // get_post_meta($timeframe->location_id, $cbCity, TRUE);
 			$location = str_replace('Berlin-','B-',$location);
+			if ($location1 == '') {
+				$location1 = $location;}
+			else if ($location1 != $location) {
+				$location = $location1.' / '.$location;} // > 1 location
 		}
 	
 		$query = $wpdb->prepare("SELECT * FROM $cbBookings WHERE status = 'confirmed' AND date_end >= '%s' AND item_id = %s ORDER BY date_start ASC", $today, $itemID);
