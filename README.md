@@ -1,3 +1,65 @@
+In file `wp-includes/shortcodes.php`, add the line: (e.g. at the end)
+
+```
+include_once( ABSPATH . WPINC . '/custom-shortcodes-cb-bookings-overviews.php');
+```
+
+and copy file `custom-shortcodes-cb-bookings-overviews.php` to `wp-includes`.
+
+But `shortcodes.php` got overwritten during Wordpress update. Better: include
+that line either in the functions.php file of your theme or add it to the end of
+`private function __construct() {` in
+`wp-content/plugins/commons-booking/public/class-commons-booking.php` See also
+https://stackoverflow.com/questions/6430855/shortcodes-breaking-wordpress-site.
+
+Then create a new page in Wordpress backend and enter for example:
+
+```
+[cb_bookings_overview locid=447 days=10]
+```
+
+to get a booking overview table for the location with ID 447 (check the
+'post=... ' in the URL of the edit location page to get the location ID) for 10
+days in the future and past (default is 15 days). Repeat this for the other
+stations/locations. You need one page per location.
+
+You can also put the shortcode into the description of the location. That page
+will be accessible under the URL http://localhost/bolle/cb-locations/<location-name>.
+But keep in mind that this page must subsequently be hidden, so don't put
+information here that users should be able to see.
+
+You might want to do this the other way around: first hide all location pages
+with "Restrict User Access", see below, then add the short codes to the pages to
+avoid someone peeking on private data.
+
+Now install the plugin "Restrict User Access - Membership Plugin with Force" (see
+https://www.quora.com/How-can-you-make-a-Wordpress-page-visible-only-to-logged-in-users,
+https://wordpress.org/plugins/restrict-user-access/#how%20do%20i%20restrict%20some%20content%3F).
+
+In the backend, click on "User Access" -> "Add New" to create an access level.
+You need to create one access level per station/location.
+
+Enter the name of the location as name of the access level (for easy
+recognition, or choose your own scheme). Under "Members-Only Access", click on
+"+ New condition group" and one of the following:
+* if you added new pages for the booking overviews, click on "Pages" (in German
+  "Seiten"), then select the page that corresponds to the location and contains
+  the location's booking overview.
+* if you added the overviews to the location descriptions, click on "Locations"
+  (in German "Standorte") and select the location.
+
+On the tab "Members" of the access level, click into the field "Search for
+Users..." and enter and select the user name currently managing the location.
+Click on "Save" ("Speichern").
+
+Voilà! Only the user managing the location is able to see the booking overview
+when logged in! You only need to provide them with the URL.
+
+When someone else takes over management of the location, just remove the old
+user and add the new to the "Members" of the access level. Of course, also
+several users can be added.
+
+
 # Commons Booking shortcodes extension
 
 * a collection of shortcodes for usage with Wordpress plugin [Commons Booking](https://github.com/wielebenwir/commons-booking)
