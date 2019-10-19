@@ -1,7 +1,7 @@
 # Commons Booking shortcodes extension
 
 * a collection of shortcodes for usage with Wordpress plugin [Commons Booking](https://github.com/wielebenwir/commons-booking)
-* php files can be included in functions.php
+* php files can be included in functions.php of child theme or installed as plugin
 * shortcodes can be used in pages, posts and widgets
 * table sorting requires Wordpress Plugin [Table Sorter](https://de.wordpress.org/plugins/table-sorter/)
 
@@ -57,7 +57,7 @@
 
 * for more details see description on top of each php-file
 
-## More verbose instructions
+## More verbose instructions (added by Markus V.)
 
 ### How to install the booking overview shortcode plugin
 
