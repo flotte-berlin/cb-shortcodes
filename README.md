@@ -93,13 +93,24 @@ days in the future and past (default is 15 days). Repeat this for the other
 stations/locations. You need one page per location.
 
 You can also put the shortcode into the description of the location. That page
-will be accessible under the URL http://your-domain.tld/cb-locations/<location-name>.
+will be accessible under the URL `http://your-domain.tld/cb-locations/<location-name>`.
 But keep in mind that this page must subsequently be hidden for privacy reasons, so don't put
 information here that users should be able to see.
 
 You might want to do this the other way around: first hide all location pages
 with "Restrict User Access" (see below), then add the short codes to the pages to
 avoid someone peeking on private data.
+
+**IMPORTANT:** By default, commons-booking creates an overview page with all
+location descriptions under `http://your-domain.tld/cb-locations`. Even if you
+make the single location pages private (as described below), that overview page
+will still be open publicly and cannot be made private with the "User Access"
+plugin.  So, if you choose to put the booking overviews into location
+descriptions, that page will contain sensitive data and must be hidden.
+Although there might be a less hackish way to solve this problem, for me using
+the Apache web server it was enough to create an empty directory `cb-locations`
+under the Wordpress root directory. Then, depending on Apache's configuration,
+either an empty directory listing or an error 403 is shown.
 
 ### Make the booking overviews private
 
