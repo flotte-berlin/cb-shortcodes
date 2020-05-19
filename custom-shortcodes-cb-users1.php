@@ -4,7 +4,7 @@ Plugin Name: CB Shortcodes:  user bookings summaries/statistics
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying user bookings summaries/statistics on a page.
 Attention: the results contain personal user-data and should be placed only on a non-public page!
-Version: 1.0
+Version: 1.0.1
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
@@ -22,12 +22,13 @@ $heute = date("j. n. Y");
 $start_date = new dateTime();
 $start_date = $start_date->modify('-1 month');
 $date_begin = $start_date->format('Y-m-d');
+$status = 'pending';
 
 $print = '';
 global $wpdb;
 
 $cbTable = $wpdb->prefix . "cb_bookings";
-$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status != 'pending' ORDER by user_id DESC, date_start DESC, booking_time DESC", RID);
+$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status != '%s' ORDER by user_id DESC, date_start DESC, booking_time DESC", $status);
 $bookings = $wpdb->get_results($query);
 $userID = '';
 $bookingsSubscriber = 0;
