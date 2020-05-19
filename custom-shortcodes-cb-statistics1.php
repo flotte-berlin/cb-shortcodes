@@ -76,13 +76,13 @@ if ($bookings) {
 			if ($timeframe->date_start <= $yesterday->format('Y-m-d')){
 				$timeframe_start = DateTime::createFromFormat('Y-m-d',$timeframe->date_start);
 				$timeframe_end = DateTime::createFromFormat('Y-m-d',$timeframe->date_end);
-			    $timeframe_start->setTime(0, 0, 0);
+			    	$timeframe_start->setTime(0, 0, 0);
 				$timeframe_end->setTime(23, 59, 59);				
 				if ($first_book_start == '') {$first_book_start = $timeframe_start; }	
 				$item_row['days_month'] += date_diff(min($timeframe_start,$yesterday), min($timeframe_end, $yesterday))->format('%a') + 1; 					
 			}
 		}
-		$item_row['since'] = $first_book_start->format('d.m.Y');
+		if ($first_book_start) {$item_row['since'] = $first_book_start->format('d.m.Y');}
 		if ($item_row['days_month'] == 0 ) {  // timeframe is missing 
 			$date_start = DateTime::createFromFormat('Y-m-d', $booking->date_start);
 			$date_start->setTime(0, 0, 0);
