@@ -4,7 +4,7 @@ Plugin Name: CB Shortcodes: Booking statistics
 Plugin URI: https://github.com/flotte-berlin/cb-shortcodes
 Description: Shortcodes for displaying bookings statistics on a page. 
 Remark: the results do not contain personal user-data 
-Version: 1.2
+Version: 1.2.1
 Author: gundelfisch
 Author URI: https://flotte-berlin.de
 License: GPLv2 or later
