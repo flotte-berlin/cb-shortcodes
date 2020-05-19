@@ -68,7 +68,7 @@ if ($bookings) {
 		$item_row['item'] = $item_name;
 		
 		$cbTable = $wpdb->prefix . "cb_timeframes";
-		$query2 = $wpdb->prepare("SELECT * FROM $cbTable WHERE location_id = $location AND item_id = $item ORDER BY date_start ASC", RID);
+		$query2 = $wpdb->prepare("SELECT * FROM $cbTable WHERE location_id = %s AND item_id = %s ORDER BY date_start ASC", $location, $item);
 		$timeframes = $wpdb->get_results($query2);	
 		$first_book_start = '';
 		
@@ -209,14 +209,15 @@ function cb_bookings_months_shortcode ( $atts ) {
 	
 $today = new dateTime(current_time('mysql'));
 $print = "<p><b>Bestätigte Buchungen pro Monat (Buchungsstand vom ".$today->format('d.m.Y')."):</b></p>";	
+$status = 'confirmed';
 	
 global $wpdb;	
 $cbTable2 = $wpdb->prefix . "cb_timeframes";
-$query2 = $wpdb->prepare("SELECT * FROM $cbTable2", RID);
+$query2 = $wpdb->prepare("SELECT * FROM $cbTable2", $status);
 $timeframes = $wpdb->get_results($query2);	
 	
 $cbTable = $wpdb->prefix . "cb_bookings";
-$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' ORDER by date_start ASC LIMIT 1", RID);
+$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = '%s' ORDER by date_start ASC LIMIT 1", $status);
 $booking1 = $wpdb->get_results($query);	
 	
 // data arrays for table and chart:
@@ -240,10 +241,10 @@ if ($booking1)
 	// get registered subscribers before first booking month
 	$start_time = $first_month."-01 00:00:00";
 	$args = array (
-   				 'role'          => 'subscriber',
+   			 'role'          => 'subscriber',
     			 'date_query'    => array(
-       				 array(
-          		 		'before'     => $start_time,						
+       			 	array(
+          		 	'before'     => $start_time,						
             			'inclusive' => true,
       			  	),
     		 	),
@@ -254,7 +255,7 @@ if ($booking1)
 	$total_row['registered'] = $user_query->total_users;
 	$total_row['items'] = '';
 	
-	$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = 'confirmed' ORDER by date_start DESC LIMIT 1", RID);
+	$query = $wpdb->prepare("SELECT * FROM $cbTable WHERE status = '%s' ORDER by date_start DESC LIMIT 1", $status);
 	$booking2 = $wpdb->get_results($query);	
 	$last_booking = max(array_column($booking2, 'date_start'));
 	$last_month = substr($last_booking,0,7);	
