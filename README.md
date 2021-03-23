@@ -1,7 +1,7 @@
 # Commons Booking shortcodes extension
 
 * a collection of shortcodes for displaying item and booking information on a page, post or widget
-* data require Wordpress plugin [Commons Booking](https://github.com/wielebenwir/commons-booking)
+* Tested: Wordpress 5.x, Commons Booking 0.9.x, not for newer versions (CB2)!
 * php files can be included in functions.php of child theme or installed as plugin
 * table sorting requires Wordpress Plugin [Table Sorter](https://de.wordpress.org/plugins/table-sorter/)
 
